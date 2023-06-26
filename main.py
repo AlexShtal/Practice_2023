@@ -6,9 +6,8 @@ import pandas
 path = "Practice_2023\Energy_Consumption_Dataset\powerconsumption.csv"
 ds = pandas.read_csv(path)
 
-print(ds.shape)
-print(ds)
+df['Datetime'] = pd.to_datetime(df['Datetime'], format='%m/%d/%Y %H:%M')
 
-# ds['Datetime'] = pandas.to_datetime(ds['Datetime'], format='%b/%d/ %I:%M %p').dt.strftime('%b %d %H:%M:%S.%f')
-# ds['Datetime'] = ds['Datetime'].apply(lambda x: dt.datetime.strptime(x,'%b %d %H:%M:%S.%f') if type(x)==str else pd.NaT)
-
+df = df.set_index(df["Datetime"])
+df = df.drop("Datetime", axis = 1)
+df.insert(loc=0,column="Month",value=ds.index.month)
