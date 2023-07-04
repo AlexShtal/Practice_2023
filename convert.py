@@ -1,4 +1,5 @@
 import pandas as pd
+import sqlite3
 
 df = pd.read_csv("Energy_Consumption_Dataset\powerconsumption.csv")
 
@@ -15,4 +16,7 @@ df = df.drop(["PowerConsumption_Zone1", "PowerConsumption_Zone2", "PowerConsumpt
 
 df = df[df["Month"] == 12]
 
+cnx = sqlite3.connect('db1.db')
+
 df.to_csv("DataBase\Model_Input", index=False)
+df.to_sql(name='PowerDataInput', con=cnx, if_exists='replace')

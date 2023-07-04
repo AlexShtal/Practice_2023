@@ -1,6 +1,6 @@
 import pandas as pd
 import xgboost as xgb
-
+import sqlite3
 
 model = xgb.Booster()
 model.load_model("model_xgb.json")
@@ -20,4 +20,7 @@ preds = preds.set_axis(["PowerConsumption_Zone1",
 output = pd.concat([input, preds], axis=1)
 print(output)
 
+cnx = sqlite3.connect('db1.db')
+
 output.to_csv("DataBase\Model_Output", index=False)
+output.to_sql(name='PowerDataOutput', con=cnx, if_exists='replace')
